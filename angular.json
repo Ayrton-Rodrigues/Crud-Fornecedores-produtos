@@ -26,6 +26,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "angular2-text-mask",
+              "babel-runtime/core-js/get-iterator",
+              "babel-runtime/helpers/createClass",
+              "babel-runtime/helpers/extends",
+              "babel-runtime/helpers/slicedToArray",
+              "ng2-validation"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

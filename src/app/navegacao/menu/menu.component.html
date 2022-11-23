@@ -1,0 +1,37 @@
+<header>
+  <nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow"
+  >
+    <div class="container">
+      <a routerLink="/home" class="navbar-brand">Meus Produtos</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target=".navbar-collapse"
+        (click)="isCollapsed = !isCollapsed"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngbCollapse]="isCollapsed"   >
+
+        <app-menu-login>
+
+        </app-menu-login>
+
+        <ul class="navbar-nav flex-grow-1">
+          <li class="nav-item">
+            <a routerLink="/home" class="nav-link text-dark">Home</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="['/fornecedores/listar-todos']" class="nav-link text-dark">Fornecedores</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="['/produtos/listar-todos']" class="nav-link text-dark">Produtos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

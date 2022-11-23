@@ -1,0 +1,51 @@
+<div class="container main-container">
+  <h1>Faça seu login</h1>
+
+  <form novalidate  (ngSubmit)="login()" [formGroup]="loginForm">
+
+      <h4>Entre em sua conta</h4>
+      <hr>
+
+      <div class="alert alert-danger" *ngIf="errors.length > 0">
+          <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+          <ul>
+              <li *ngFor="let error of errors">{{ error }}</li>
+          </ul>
+      </div>
+
+      <div class="form-group"  >
+          <label class="col-md-2 control-label">E-mail</label>
+          <div class="col-md-10"  >
+              <input class="form-control" id="email" type="text" placeholder="E-mail (requerido)" formControlName="email" [ngClass]="{'is-invalid': loginForm.controls['email'].errors && (loginForm.controls['email'].touched || loginForm.controls['email'].dirty)}" />
+              <span class="text-danger" *ngIf="loginForm.controls['email'].errors?.['required'] && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
+                Email Requerido!
+               </span>
+               <span class="text-danger" *ngIf="loginForm.controls['email'].errors?.['email'] && (loginForm.controls['email'].touched || loginForm.controls['email'].dirty)" >
+                Email inválido!
+            </span>
+
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label class="col-md-2 control-label">Senha</label>
+          <div class="col-md-10">
+              <input  class="form-control" id="password" type="password" placeholder="Senha (requerido)" formControlName="password"
+              [ngClass]="{'is-invalid': loginForm.controls['password'].errors && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched) }" />
+              <span class="text-danger" *ngIf="loginForm.controls['password'].errors?.['required'] && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
+                Senha Requerida!
+              </span>
+              <span class="text-danger" *ngIf="loginForm.controls['password'].errors?.['rangeLength'] && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
+                A senha deve conter de 6 a 15 caracteres!
+              </span>
+          </div>
+      </div>
+
+
+      <div class="form-group">
+          <div class="col-md-4 col-md-offset-2">
+              <span><button class="btn btn-success" id="Login"  type="submit">Entrar</button></span>
+          </div>
+      </div>
+  </form>
+</div>
