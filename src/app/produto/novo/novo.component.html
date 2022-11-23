@@ -20,21 +20,25 @@
 
                 <div class="form-group">
                     <label class="control-label">Fornecedor</label>
-                    <select class="form-control" id="fornecedorId" formControlName="fornecedorId" [ngClass]="{'is-invalid': false }">
+                    <select class="form-control" id="fornecedorId" formControlName="fornecedorId" [ngClass]="{'is-invalid': produtoForm.controls['fornecedorId'].errors && (produtoForm.controls['fornecedorId'].touched || produtoForm.controls['fornecedorId'].dirty) }">
                         <option *ngFor="let fornecedor of fornecedores" value="{{ fornecedor.id }}">{{ fornecedor.nome }}</option>
                     </select>
-                    <!-- <span class="text-danger" *ngIf="displayMessage.fornecedorId">
-                        <p [innerHTML]="displayMessage.fornecedorId"></p>
-                    </span> -->
+                    <span class="text-danger" *ngIf="produtoForm.controls['fornecedorId'].errors && (produtoForm.controls['fornecedorId'].touched || produtoForm.controls['fornecedorId'].dirty)">
+                      Fornecedor requerido!
+                    </span>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Nome</label>
                     <div>
-                        <input class="form-control" id="nome" type="text" placeholder="Nome (requerido)" formControlName="nome" [ngClass]="{'is-invalid': produtoForm.controls['nome'].errors && (produtoForm.controls['nome'].touched || produtoForm.controls['nome'].dirty) }" />
+                        <input class="form-control" id="nome" type="text" placeholder="Nome (requerido)" formControlName="nome" [ngClass]="{'is-invalid': produtoForm.controls['nome'].errors?.['required'] && (produtoForm.controls['nome'].touched || produtoForm.controls['nome'].dirty) }" />
 
-                        <span class="text-danger" *ngIf="produtoForm.controls['nome'].errors && (produtoForm.controls['nome'].touched || produtoForm.controls['nome'].dirty)">
+                        <span class="text-danger" *ngIf="produtoForm.controls['nome'].errors?.['required'] && (produtoForm.controls['nome'].touched || produtoForm.controls['nome'].dirty)">
                           nome requerido!
+                        </span>
+
+                        <span class="text-danger" *ngIf="produtoForm.controls['nome'].errors?.['minlength'] && (produtoForm.controls['nome'].touched || produtoForm.controls['nome'].dirty)">
+                          Mínimo 2 caracteres!
                         </span>
 
                     </div>
@@ -45,7 +49,13 @@
                     <div>
                         <textarea cols="40" rows="5" maxlength="1000" class="form-control" id="descricao" placeholder="Descrição (requerido)" formControlName="descricao" [ngClass]="{'is-invalid': produtoForm.controls['descricao'].errors && (produtoForm.controls['descricao'].touched || produtoForm.controls['descricao'].dirty) }"></textarea>
 
+                        <span class="text-danger" *ngIf="produtoForm.controls['descricao'].errors?.['required'] && (produtoForm.controls['descricao'].touched || produtoForm.controls['descricao'].dirty)">
+                          Descrição requerido!
+                        </span>
 
+                        <span class="text-danger" *ngIf="produtoForm.controls['descricao'].errors?.['minlength'] && (produtoForm.controls['descricao'].touched || produtoForm.controls['descricao'].dirty)">
+                          Mínimo 2 caracteres!
+                        </span>
                     </div>
                 </div>
 
@@ -53,9 +63,15 @@
                     <label class="control-label">Imagem do Produto</label>
 
                     <div class="custom-file">
-                        <input type="file" accept="image/jpeg,image/png" class="custom-file-input" id="imagem" formControlName="imagem" (change)="fileChangeEvent($event)" [ngClass]="{'is-invalid': 'displayMessage.imagem '}">
+                        <input type="file" accept="image/jpeg,image/png" class="custom-file-input" id="imagem" formControlName="imagem" (change)="fileChangeEvent($event)" [ngClass]="{'is-invalid': produtoForm.controls['imagem'].errors && (produtoForm.controls['imagem'].touched)}">
                         <label data-browse="Procurar" style="width: 400px" class="custom-file-label"></label>
                         <span *ngIf='imagemNome'><br>{{ imagemNome }}<br></span>
+
+                        <div>
+                          <span class="text-danger" *ngIf="produtoForm.controls['imagem'].errors && (produtoForm.controls['imagem'].touched || produtoForm.controls['imagem'].dirty)">
+                            imagem requerida!
+                          </span>
+                        </div>
 
 
                     </div>
@@ -75,9 +91,11 @@
                 <div class="form-group">
                     <label class="control-label">Valor</label>
                     <div>
-                        <input class="form-control" id="valor" type="text" placeholder="Valor (requerido)" formControlName="valor" [ngClass]="{'is-invalid': 'displayMessage.valor' }" />
+                        <input class="form-control" id="valor" type="text" placeholder="Valor (requerido)" formControlName="valor" [ngClass]="{'is-invalid': produtoForm.controls['valor'].errors && (produtoForm.controls['valor'].touched || produtoForm.controls['valor'].dirty) }" />
 
-
+                        <span *ngIf="produtoForm.controls['valor'].errors && (produtoForm.controls['valor'].touched || produtoForm.controls['valor'].dirty)">
+                          Valor requerido!
+                        </span>
                     </div>
                 </div>
 
