@@ -1,7 +1,7 @@
 import { ProdutoModule } from './produto/produto.module';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpInterceptor } from '@angular/common/http';
 import { BaseService } from 'src/app/services/base.service';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,6 +12,10 @@ import { ContaModule } from './conta/conta.module';
 import { NavegacaoModule } from './navegacao/navegacao.module';
 import { ToastrModule } from 'ngx-toastr';
 import { ErrorHandlerService } from './services/error.handler.service';
+
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+registerLocaleData(localePt);
 
 export const httpInterceptorError = {
   provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerService, multi: true
@@ -34,7 +38,11 @@ export const httpInterceptorError = {
   ],
   providers: [
     BaseService,
-    httpInterceptorError
+    httpInterceptorError,
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt-BR'
+    }
 
   ],
   bootstrap: [AppComponent]
