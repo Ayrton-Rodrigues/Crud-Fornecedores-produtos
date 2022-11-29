@@ -57,7 +57,8 @@ export class EditarComponent extends ProdutoBaseComponent implements OnInit{
       ativo: this.produto.ativo,
       valor: CurrencyUtils.DecimalParaString(this.produto.valor)
     });
-
+    console.log(this.produto);
+    console.log(CurrencyUtils.DecimalParaString(this.produto.valor));
     // utilizar o [src] na imagem para evitar que se perca após post
     this.imagemOriginalSrc = this.imagens + this.produto.imagem;
     this.countLetter = this.produto.descricao.length.toString();

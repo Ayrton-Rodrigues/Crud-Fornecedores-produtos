@@ -39,6 +39,7 @@ export const httpInterceptorError = {
   providers: [
     BaseService,
     httpInterceptorError,
+
     {
       provide: LOCALE_ID,
       useValue: 'pt-BR'

@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -17,20 +17,26 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private contaService: ContaService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
     ) { }
-  loginForm!: FormGroup
+
+  returnUrl!: string;
+  loginForm!: FormGroup;
   errors: any[] = [];
+
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, CustomValidators.rangeLength([6, 15])]]
     })
+
+    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'];
   }
 
   login() {
     if(this.loginForm.dirty && this.loginForm.valid) {
-    debugger
+
      this.usuario = Object.assign({}, this.usuario, this.loginForm.value);
 
      this.contaService.login(this.usuario).subscribe(
@@ -52,7 +58,7 @@ processarSucesso(response: any) {
    this.toastr.success('Login realizado com sucesso!', 'Bem vindo ' + user.email + ' :D', {
      timeOut: 10000
    })
-   this.router.navigate(['/home']);
+   this.returnUrl ? this.router.navigate([this.returnUrl]) : this.router.navigate(['/home']);
 }
 
 processarFalha(fail: any) {

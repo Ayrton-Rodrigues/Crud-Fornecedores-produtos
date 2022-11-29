@@ -23,11 +23,4 @@ export class FornececedorGuard extends BaseGuard implements CanActivate, CanDeac
     }
 
 
-
-    // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    //   if(!this.localStorageUtils.obterTokenUsuario()){
-    //     this.router.navigate(['/conta/login/'], { queryParams: { returnUrl: state.url }});
-    //   }
-    //   return true;
-    // }
 }

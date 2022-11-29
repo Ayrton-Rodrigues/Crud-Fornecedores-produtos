@@ -18,6 +18,7 @@ export class DetalhesComponent {
     private sanitizer: DomSanitizer) {
 
       this.fornecedor = this.route.snapshot.data['fornecedor'];
+      console.log(this.fornecedor.produtos)
       // this.enderecoMap = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.google.com/maps/embed/v1/place?q=" + this.EnderecoCompleto() + "&key=AIzaSyAP0WKpL7uTRHGKWyakgQXbW6FUhrrA5pE");
   }
 

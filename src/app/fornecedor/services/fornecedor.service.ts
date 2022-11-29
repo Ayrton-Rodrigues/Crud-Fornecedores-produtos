@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { Observable } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { catchError, map, tap } from "rxjs/operators";
 
 import { BaseService } from 'src/app/services/base.service';
 import { Fornecedor } from '../models/fornecedor';
@@ -18,7 +18,9 @@ export class FornecedorService extends BaseService {
     obterTodos(): Observable<Fornecedor[]> {
         return this.http
             .get<Fornecedor[]>(this.UrlServiceV1 + "fornecedores")
-            .pipe(catchError(super.serviceError));
+            .pipe(
+              catchError(super.serviceError)
+              );
     }
 
     obterPorId(id: string): Observable<Fornecedor> {
