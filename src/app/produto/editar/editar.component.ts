@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators, FormControlName } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -13,7 +13,7 @@ import { ProdutoBaseComponent } from '../produto-form.base.component';
   selector: 'app-editar',
   templateUrl: './editar.component.html'
 })
-export class EditarComponent extends ProdutoBaseComponent implements OnInit {
+export class EditarComponent extends ProdutoBaseComponent implements OnInit{
 
   imagens: string = environment.imagensUrl;
 
@@ -37,13 +37,13 @@ export class EditarComponent extends ProdutoBaseComponent implements OnInit {
   ngOnInit(): void {
 
     this.produtoService.obterFornecedores()
-      .subscribe(
-        fornecedores => this.fornecedores = fornecedores);
+    .subscribe(
+      fornecedores => this.fornecedores = fornecedores);
 
-    this.produtoForm = this.fb.group({
-      fornecedorId: ['', [Validators.required]],
-      nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
-      descricao: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1000)]],
+      this.produtoForm = this.fb.group({
+        fornecedorId: ['', [Validators.required]],
+        nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
+        descricao: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1000)]],
       imagem: [''],
       valor: ['', [Validators.required]],
       ativo: [0]
@@ -60,6 +60,7 @@ export class EditarComponent extends ProdutoBaseComponent implements OnInit {
 
     // utilizar o [src] na imagem para evitar que se perca após post
     this.imagemOriginalSrc = this.imagens + this.produto.imagem;
+    this.countLetter = this.produto.descricao.length.toString();
   }
 
   ngAfterViewInit(): void {
@@ -78,29 +79,29 @@ export class EditarComponent extends ProdutoBaseComponent implements OnInit {
       this.produto.valor = CurrencyUtils.StringParaDecimal(this.produto.valor);
 
       this.produtoService.atualizarProduto(this.produto)
-        .subscribe(
-          sucesso => { this.processarSucesso(sucesso) },
-          falha => { this.processarFalha(falha) }
+      .subscribe(
+        sucesso => { this.processarSucesso(sucesso) },
+        falha => { this.processarFalha(falha) }
         );
 
-     // this.mudancasNaoSalvas = false;
+        // this.mudancasNaoSalvas = false;
+      }
     }
-  }
 
-  processarSucesso(response: any) {
-    this.produtoForm.reset();
-    this.errors = [];
+    processarSucesso(response: any) {
+      this.produtoForm.reset();
+      this.errors = [];
 
-    let toast = this.toastr.success('Produto editado com sucesso!', 'Sucesso!');
-    if (toast) {
-      toast.onHidden.subscribe(() => {
+      const toast = this.toastr.success('Produto editado com sucesso!', 'Sucesso!');
+      if (toast) {
+        toast.onHidden.subscribe(() => {
         this.router.navigate(['/produtos/listar-todos']);
       });
     }
   }
 
   processarFalha(fail: any) {
-    this.errors = fail.error.errors;
+    this.errors = fail;
     this.toastr.error('Ocorreu um erro!', 'Opa :(');
   }
 
@@ -117,5 +118,14 @@ export class EditarComponent extends ProdutoBaseComponent implements OnInit {
     this.imageBase64 = btoa(binaryString);
     this.imagemPreview = "data:image/jpeg;base64," + this.imageBase64;
   }
+
+  countLetter!: string;
+  countLetterByDescription(event: any) {
+
+   this.countLetter = event.target.value.length;
+
+
+  }
+
 }
 
